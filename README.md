@@ -1,5 +1,9 @@
 # 📚 Sistema de Lista Telefônica com Estruturas Encadeadas 
 
+[![Java](https://img.shields.io/badge/Java-17-blue.svg)](https://java.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Ativo-brightgreen.svg)](https://github.com/GabrielGit10110/data-structures-java)
+
 # ⚠️ EM DESENVOLVIMENTO
 
 Sistema avançado de lista telefônica que utiliza estruturas de dados encadeadas para armazenamento eficiente de nomes organizados alfabeticamente.
