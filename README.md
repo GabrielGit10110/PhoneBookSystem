@@ -1,4 +1,6 @@
-# 📚 Sistema de Lista Telefônica com Estruturas Encadeadas ⚠️ EM DESENVOLVIMENTO
+# 📚 Sistema de Lista Telefônica com Estruturas Encadeadas 
+
+# ⚠️ EM DESENVOLVIMENTO
 
 Sistema avançado de lista telefônica que utiliza estruturas de dados encadeadas para armazenamento eficiente de nomes organizados alfabeticamente.
 
