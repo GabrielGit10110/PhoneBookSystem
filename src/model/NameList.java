@@ -4,6 +4,15 @@ package model;
  * Represents a singly linked list for storing names in alphabetical order.
  * This class provides methods to insert, remove, search for, and manage names
  * while maintaining the sorted order of the list.
+ * 
+ * <p>
+ * The list maintains both head and tail references for efficient operations
+ * at both ends and ensures names are always stored in alphabetical order.
+ * </p>
+ *
+ * @author Gabriel
+ * @version 1.0
+ * @since 2024
  */
 public class NameList {
 	private NodeName head;
@@ -16,22 +25,26 @@ public class NameList {
 	// clear() - remove todos os nomes da lista
 	// clear(letter) - remove todos os nomes com a letra especifica
 
+	/**
+	 * Constructs an empty NameList.
+	 * Initializes head and last references to null and size to zero.
+	 */
 	public NameList() {
 		this.head = null;
 		this.last = null;
 		this.size = 0;
-
 	}
 
 	/**
 	 * Inserts a new name into the list while maintaining alphabetical order.
 	 * If the name already exists in the list, no action is taken.
 	 *
-	 * @param name The name to be inserted.
-	 * @throws IllegalArgumentException if the name already exists in the list.
+	 * @param name  The name to be inserted
+	 * @param phone The phone number associated with the name
+	 * @throws IllegalArgumentException if the name already exists in the list
 	 */
-	public void insertName(String name) throws IllegalArgumentException {
-		NodeName newName = new NodeName(name);
+	public void insertName(String name, int phone) throws IllegalArgumentException {
+		NodeName newName = new NodeName(name, phone);
 
 		// caso a lista seja vazia
 		if (this.head == null) {
@@ -65,7 +78,6 @@ public class NameList {
 		if (previous == null) {
 			newName.setNextName(this.head);
 			this.head = newName;
-
 		}
 		// caso contrário
 		else {
@@ -79,18 +91,36 @@ public class NameList {
 				// o último nó agora é o novo nó
 				this.last = newName;
 			}
-
 		}
 		this.size++;
+	}
 
+	/**
+	 * Finds and returns the phone number associated with a specific name.
+	 *
+	 * @param name The name to search for
+	 * @return The phone number associated with the name
+	 * @throws IllegalArgumentException if the list is empty or the name is not
+	 *                                  found
+	 */
+	public int findPhoneNumber(String name) throws IllegalArgumentException {
+		if (this.head == null) {
+			throw new IllegalArgumentException("Lista esta vazia, nao existem numeros para buscar...");
+		}
+
+		NodeName pointer = get(name);
+
+		int phoneNumber = pointer.getPhone();
+
+		return phoneNumber;
 	}
 
 	/**
 	 * Searches for a name and returns its index in the list.
 	 *
-	 * @param name The name to search for.
-	 * @return The index of the name in the list.
-	 * @throws IllegalArgumentException if the name does not exist in the list.
+	 * @param name The name to search for
+	 * @return The index of the name in the list
+	 * @throws IllegalArgumentException if the name does not exist in the list
 	 */
 	public int index(String name) throws IllegalArgumentException {
 		int index = 0;
@@ -99,7 +129,6 @@ public class NameList {
 		while (currentName != null) {
 			if (currentName.getName().equalsIgnoreCase(name)) {
 				return index;
-
 			}
 
 			currentName = currentName.getNextName();
@@ -112,8 +141,8 @@ public class NameList {
 	/**
 	 * Searches for a name and returns the NodeName object.
 	 *
-	 * @param name The name to search for.
-	 * @return The NodeName object containing the name, or null if not found.
+	 * @param name The name to search for
+	 * @return The NodeName object containing the name, or null if not found
 	 */
 	private NodeName findNode(String name) {
 		NodeName loop = this.head;
@@ -129,8 +158,8 @@ public class NameList {
 	/**
 	 * Checks if a specific name is present in the list.
 	 *
-	 * @param name The name to check.
-	 * @return true if the name is in the list, false otherwise.
+	 * @param name The name to check
+	 * @return true if the name is in the list, false otherwise
 	 */
 	public boolean isOnTheList(String name) {
 		NodeName loop = findNode(name);
@@ -141,9 +170,10 @@ public class NameList {
 	/**
 	 * Retrieves the NodeName at the specified index.
 	 *
-	 * @param index The index of the node to retrieve.
-	 * @return The NodeName object at the given index.
-	 * @throws IndexOutOfBoundsException if the index is out of bounds (less than 0 or greater than or equal to the size).
+	 * @param index The index of the node to retrieve
+	 * @return The NodeName object at the given index
+	 * @throws IndexOutOfBoundsException if the index is out of bounds (less than 0
+	 *                                   or greater than or equal to the size)
 	 */
 	public NodeName get(int index) throws IndexOutOfBoundsException {
 		if (index < 0 || index >= this.size) {
@@ -156,33 +186,31 @@ public class NameList {
 		}
 
 		return loop;
-
 	}
 
 	/**
 	 * Retrieves the NodeName object for a specific name.
 	 *
-	 * @param name The name to search for.
-	 * @return The NodeName object associated with the name.
-	 * @throws IllegalArgumentException if the name does not exist in the list.
+	 * @param name The name to search for
+	 * @return The NodeName object associated with the name
+	 * @throws IllegalArgumentException if the name does not exist in the list
 	 */
 	public NodeName get(String name) throws IllegalArgumentException {
 		NodeName loop = findNode(name);
 
 		if (loop != null) {
 			return loop;
-
 		} else {
 			throw new IllegalArgumentException("Nome nao existe na lista...");
-
 		}
 	}
 
 	/**
-	 * Removes a name from the list.
+	 * Removes a name from the list while maintaining alphabetical order.
 	 *
-	 * @param name The name to be removed.
-	 * @throws IllegalArgumentException if the list is empty or the name does not exist in the list.
+	 * @param name The name to be removed
+	 * @throws IllegalArgumentException if the list is empty or the name does not
+	 *                                  exist in the list
 	 */
 	public void removeName(String name) throws IllegalArgumentException {
 		// caso a lista seja vazia
@@ -204,7 +232,6 @@ public class NameList {
 		// checa se o nome existe na lista ou nao
 		if (toBeRemoved == null || toBeRemoved.getName().compareTo(name) != 0) {
 			throw new IllegalArgumentException("Nome nao existe na lista");
-
 		}
 
 		// caso o nome esteja no inicio
@@ -223,25 +250,23 @@ public class NameList {
 
 		// auxilio ao garbage collector
 		toBeRemoved.setNextName(null);
-		toBeRemoved.setName(null);
 		this.size--;
-
 	}
 
 	/**
 	 * Removes all names from the list, making it empty.
+	 * Resets head and last references to null and size to zero.
 	 */
 	public void clear() {
 		this.head = null;
 		this.last = null;
 		this.size = 0;
-
 	}
 
 	/**
 	 * Returns the first node in the list.
 	 *
-	 * @return The head node of the list, or null if the list is empty.
+	 * @return The head node of the list, or null if the list is empty
 	 */
 	public NodeName getHead() {
 		return this.head;
@@ -250,11 +275,9 @@ public class NameList {
 	/**
 	 * Returns the number of names in the list.
 	 *
-	 * @return The size of the list.
+	 * @return The size of the list
 	 */
 	public int getSize() {
 		return this.size;
-
 	}
-
 }
