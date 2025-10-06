@@ -1,5 +1,18 @@
 package model;
 
+/**
+ * Represents a doubly linked list of characters that serves as the main index
+ * for the phone book structure. This list maintains characters in alphabetical
+ * order and provides efficient operations for managing letter groups.
+ * 
+ * <p>Each character node in this list points to a NameList containing all
+ * names that start with that particular letter, creating a hierarchical
+ * organization system for the phone book.</p>
+ *
+ * @author Gabriel
+ * @version 1.0
+ * @since 2024
+ */
 public class CharList {
 	private NodeChar head;
 	private NodeChar last;
@@ -13,6 +26,10 @@ public class CharList {
 	// size() Retorna o total de values;
 	// isEmpty() Retorna true ou false se a lista estiver vazia;
 
+	/**
+	 * Constructs an empty CharList.
+	 * Initializes head and last references to null and size to zero.
+	 */
 	public CharList() {
 		this.head = null;
 		this.last = null;
@@ -20,26 +37,23 @@ public class CharList {
 	}
 
 	/**
-	 * Checks if the list is empty
+	 * Checks if the list is empty.
 	 *
-	 * @return True if It is, False otherwise
+	 * @return true if the list contains no characters, false otherwise
 	 */
 	public boolean isEmpty() {
 		if (this.head == null) {
 			return true;
-
 		} else {
 			return false;
-
 		}
 	}
 
 	/**
-	 * Checks if an specific letter is on the list
+	 * Checks if a specific letter is present in the list.
 	 *
-	 * @param letter The lookup letter
-	 *
-	 * @return True if the letter is the list, False otherwise
+	 * @param letter the character to search for
+	 * @return true if the letter is found in the list, false otherwise
 	 */
 	public boolean isOnTheList(char letter) {
 		NodeChar currentLetter = this.head;
@@ -47,7 +61,6 @@ public class CharList {
 		while (currentLetter != null) {
 			if (currentLetter.getLetter() == letter) {
 				return true;
-
 			}
 			currentLetter = currentLetter.getNextChar();
 		}
@@ -55,10 +68,10 @@ public class CharList {
 	}
 
 	/**
-	 * Inserts a new character inside the list in
-	 * alphabetical order
+	 * Inserts a new character into the list in alphabetical order.
+	 * If the letter already exists, no action is taken.
 	 *
-	 * @param letter The letter that will be inserted
+	 * @param letter the character to be inserted
 	 */
 	public void insert(char letter) {
 		NodeChar newChar = new NodeChar(letter); // o novo caractere
@@ -69,7 +82,6 @@ public class CharList {
 			this.last = newChar;
 			this.size++;
 			return;
-
 		}
 
 		NodeChar current = this.head; // um contador
@@ -78,13 +90,11 @@ public class CharList {
 		while (current != null && current.getLetter() < letter) {
 			previousChar = current;
 			current = current.getNextChar();
-
 		}
 
 		// caso a letra já exista na lista
 		if (current != null && current.getLetter() == letter) {
 			return;
-
 		}
 
 		// o novo caractere é inserido entre o contador
@@ -97,10 +107,8 @@ public class CharList {
 		// ou seja, a nova letra é menor que a primeira
 		if (previousChar == null) {
 			this.head = newChar;
-
 		} else {
 			previousChar.setNextChar(newChar);
-
 		}
 
 		// caso o while tenha chegado ao fim
@@ -108,22 +116,19 @@ public class CharList {
 		// ou seja, a nova letra é maior que o final
 		if (current == null) {
 			this.last = newChar;
-
 		} else {
 			current.setPreviousChar(newChar);
 		}
 
 		this.size++;
-
 	}
 
 	/**
-	 * checks if the letter already exists in the list,
-	 * if It doesn't, create a new letter
+	 * Retrieves an existing character node or creates a new one if it doesn't exist.
+	 * This method ensures that a node for the specified letter always exists in the list.
 	 *
-	 * @param The lookup letter
-	 * @return The node with the letter adress
-	 *
+	 * @param letter the character to retrieve or create
+	 * @return the NodeChar associated with the specified letter
 	 */
 	public NodeChar getOrCreateChar(char letter) {
 		NodeChar newChar = new NodeChar(letter); // o novo caractere
@@ -134,7 +139,6 @@ public class CharList {
 			this.last = newChar;
 			this.size++;
 			return newChar;
-
 		}
 
 		NodeChar current = this.head; // um contador
@@ -143,13 +147,11 @@ public class CharList {
 		while (current != null && current.getLetter() < letter) {
 			previousChar = current;
 			current = current.getNextChar();
-
 		}
 
 		// caso a letra já exista na lista
 		if (current != null && current.getLetter() == letter) {
 			return current;
-
 		}
 
 		// o novo caractere é inserido entre o contador
@@ -162,10 +164,8 @@ public class CharList {
 		// ou seja, a nova letra é menor que a primeira
 		if (previousChar == null) {
 			this.head = newChar;
-
 		} else {
 			previousChar.setNextChar(newChar);
-
 		}
 
 		// caso o while tenha chegado ao fim
@@ -173,26 +173,24 @@ public class CharList {
 		// ou seja, a nova letra é maior que o final
 		if (current == null) {
 			this.last = newChar;
-
 		} else {
 			current.setPreviousChar(newChar);
 		}
 
 		this.size++;
 		return newChar;
-
 	}
 
 	/**
-	 * Remove a letter from the list
+	 * Removes a letter from the list and cleans up all associated references.
 	 *
-	 * @param letter The letter that will be removed
+	 * @param letter the character to be removed
+	 * @throws IllegalArgumentException if the list is empty or the letter is not found
 	 */
 	public void remove(char letter) throws IllegalArgumentException {
 		// nao faz nada se a lista for vazia
 		if (isEmpty()) {
 			throw new IllegalArgumentException("Lista vazia, nao pode remover elementos...");
-
 		}
 
 		// define o char a ser removido
@@ -238,16 +236,16 @@ public class CharList {
 
 		// diminuo o tamanho
 		this.size--;
-
 	}
 
 	/**
-	 * Cuts the head of the list and clean It
+	 * Clears the entire list, removing all characters and resetting the structure.
+	 *
+	 * @throws IllegalArgumentException if the list is already empty
 	 */
 	public void clear() throws IllegalArgumentException {
 		if (isEmpty()) {
 			throw new IllegalArgumentException("Lista ja esta vazia...");
-
 		}
 
 		this.head = null;
@@ -255,32 +253,31 @@ public class CharList {
 		this.size = 0;
 	}
 
-	// get com indices (0 - 25, A - Z)
 	/**
-	 * Returns the adress of a letter basead on an index
+	 * Returns the node at the specified index in the list.
+	 * Uses an optimization strategy by traversing from the head for indices
+	 * in the first half and from the tail for indices in the second half.
 	 *
-	 * @param index The lookup index
-	 * @return The node adress of the letter
+	 * @param index the position of the node to retrieve (0-based)
+	 * @return the NodeChar at the specified index
+	 * @throws IllegalArgumentException if the list is empty
+	 * @throws IndexOutOfBoundsException if the index is out of range
 	 */
 	public NodeChar get(int index) throws IllegalArgumentException, IndexOutOfBoundsException {
 		if (isEmpty()) {
 			throw new IllegalArgumentException("Nao existem itens para buscar na lista...");
-
 		}
 
 		if (index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException("Index invalido: " + index);
-
 		}
 
 		if (index == 0) {
 			return this.head;
-
 		}
 
 		if (index == size - 1) {
 			return this.last;
-
 		}
 
 		if (index <= size / 2) {
@@ -288,34 +285,29 @@ public class CharList {
 
 			for (int i = 0; i < index; i++) {
 				newChar = newChar.getNextChar();
-
 			}
 			return newChar;
-
 		} else {
 			NodeChar newChar = this.last;
 
 			for (int i = (size - 1); i > index; i--) {
 				newChar = newChar.getPreviousChar();
-
 			}
 
 			return newChar;
-
 		}
 	}
 
-	// get com letras
 	/**
-	 * Returns the node adress of a specific letter
+	 * Returns the node associated with a specific letter.
 	 *
-	 * @param letter The lookup letter
-	 * @Return The node adress of the letter
+	 * @param letter the character to search for
+	 * @return the NodeChar associated with the specified letter
+	 * @throws IllegalArgumentException if the list is empty or the letter is not found
 	 */
 	public NodeChar get(char letter) throws IllegalArgumentException {
 		if (isEmpty()) {
 			throw new IllegalArgumentException("Nao existem letras na lista...");
-
 		}
 
 		NodeChar currentLetter = this.head;
@@ -323,29 +315,28 @@ public class CharList {
 		while (currentLetter != null) {
 			if (currentLetter.getLetter() == letter) {
 				return currentLetter;
-
 			}
 
 			currentLetter = currentLetter.getNextChar();
 		}
 
 		throw new IllegalArgumentException("Letra nao encontrada na lista...");
-
 	}
 
 	/**
-	 * Returns the size of the list
+	 * Returns the number of characters in the list.
 	 *
-	 * @return Returns the size
+	 * @return the size of the list
 	 */
 	public int size() {
 		return this.size;
 	}
 
 	/**
-	 * Converts the list to a string format for visualization
+	 * Generates a string representation of the list.
+	 * The output format is a comma-separated list of characters enclosed in square brackets.
 	 *
-	 * @return The list in String format
+	 * @return a string representation of the list
 	 */
 	@Override
 	public String toString() {
@@ -360,7 +351,6 @@ public class CharList {
 
 			while (currentChar != null) {
 				builder.append(", ").append(currentChar.getLetter());
-
 				currentChar = currentChar.getNextChar();
 			}
 
@@ -369,21 +359,31 @@ public class CharList {
 		}
 	}
 
+	/**
+	 * Returns the first node in the list.
+	 *
+	 * @return the head node of the list, or null if the list is empty
+	 */
 	public NodeChar getHead() {
 		return head;
 	}
 
+	/**
+	 * Returns the last node in the list.
+	 *
+	 * @return the last node of the list, or null if the list is empty
+	 */
 	public NodeChar getLast() {
 		return last;
 	}
 
 	/**
-	 * For ease of use (size() does the same thing)
+	 * Returns the number of characters in the list.
+	 * This method provides an alternative to size() for consistency with other getter methods.
 	 *
-	 * @return The size of the list
+	 * @return the size of the list
 	 */
 	public int getSize() {
 		return size;
 	}
-
 }
