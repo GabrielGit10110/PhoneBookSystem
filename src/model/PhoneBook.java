@@ -34,7 +34,7 @@ public class PhoneBook {
 	 *
 	 * @param name The name to be added.
 	 */
-	public void addName(String name) {
+	public void addName(String name, int phone) {
 		String normalizedName = normalizeName(name);
 
 		char firstLetter = normalizedName.charAt(0);
@@ -46,7 +46,7 @@ public class PhoneBook {
 		NameList updateNameList = charNode.getNameList();
 
 		// finalmente o novo nome é adicionado
-		updateNameList.insertName(name);
+		updateNameList.insertName(name, phone);
 
 	}
 
@@ -144,6 +144,7 @@ public class PhoneBook {
 
 			while (nameNode != null) {
 				list.append(nameNode.getName());
+				list.append(" - ").append(nameNode.getPhone());
 				list.append("\n");
 				nameNode = nameNode.getNextName();
 			}

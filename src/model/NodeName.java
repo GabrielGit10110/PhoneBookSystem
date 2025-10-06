@@ -2,17 +2,20 @@ package model;
 
 public class NodeName {
 	private String name;
+	private int phone;
 	private NodeName nextName;
 
 	public NodeName() {
 		this.name = null;
 		this.nextName = null;
+		this.phone = 0;
 
 	}
 	
-	public NodeName(String name) {
+	public NodeName(String name, int phone) {
 		this.name = name;
 		this.nextName = null;
+		this.phone = phone;
 
 	}
 
@@ -25,6 +28,14 @@ public class NodeName {
 	@Deprecated
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(int phone) {
+		this.phone = phone;
 	}
 
 	public NodeName getNextName() {

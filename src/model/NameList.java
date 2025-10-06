@@ -30,8 +30,8 @@ public class NameList {
 	 * @param name The name to be inserted.
 	 * @throws IllegalArgumentException if the name already exists in the list.
 	 */
-	public void insertName(String name) throws IllegalArgumentException {
-		NodeName newName = new NodeName(name);
+	public void insertName(String name, int phone) throws IllegalArgumentException {
+		NodeName newName = new NodeName(name, phone);
 
 		// caso a lista seja vazia
 		if (this.head == null) {

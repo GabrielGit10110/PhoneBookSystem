@@ -12,9 +12,9 @@ public class TestPhoneList {
 		try {
 			PhoneBook newPB = new PhoneBook();
 
-			newPB.addName("Waldo");
-			newPB.addName("Ziraldo");
-			newPB.addName("Wesley");
+			newPB.addName("Waldo", 1191234567);
+			newPB.addName("Ziraldo", 1191234568);
+			newPB.addName("Wesley", 1193216549);
 
 			String list = newPB.toString();
 			System.out.println(list);
